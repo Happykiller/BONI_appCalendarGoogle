@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>ACTIVITY</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script type="text/javascript" src="jquery.min.js"></script>
+        
+        <script type="text/javascript">
+            var input = {
+                "rest" : "http://localhost:8383/Task%20052%20-%20Process%20Tracking/"
+                ,"debug" : true
+            };
+
+            var output = {
+                "value" : ""
+            };
+        </script>
+    </head>
+    <body>
+        <input type="text" id="input_type" value="EXT">
+        <input type="text" id="input_client" value="ORTEC">
+        <input type="text" id="input_cost" value="1.5JH">
+        <input type="text" id="input_where" value="REM">
+        <input type="text" id="input_consultant" value="FRO">
+        <input type="text" id="input_cmt" value="Truc">
+        <input type="text" id="input_start" value="13-02-15 12:00">
+        <input type="text" id="input_end" value="13-02-15 13:00">
+        <input type="checkbox" id="input_facturable" checked>
+        
+        <div id='content'>TODO write content</div>
+        
+        <script type="text/javascript">
+        $.getScript(input.rest+"libActivity.js")
+            .done(function( script, textStatus ) {
+                console.log( "libActivity.js : statut = " +  textStatus );
+            })
+            .fail(function( jqxhr, settings, exception ) {
+                console.log( "libActivity.js : Triggered ajaxError handler." );
+            })
+        ;
+        </script>
+    </body>
+</html>
