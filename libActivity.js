@@ -181,18 +181,21 @@
                     'calendarId': 'bonitasoft.com_r6cu21kekpfg8ucd1ap6fm3h58@group.calendar.google.com',
                     'resource': resource
                 });
+                
                 if(_debug){
                     console.log(resource);
+                    $('#divMsg').html("<b>Confirmed! DEBUG</b> (Auto submit 3s)");
+                    window.setTimeout($.functionsApp.submitForm,3000);
+                }else{
+                    request.execute(function(resp) {
+                        if(resp.status == "confirmed"){
+                            $('#divMsg').html("<b>Confirmed!</b> (Auto submit 3s)");
+                            window.setTimeout($.functionsApp.submitForm,3000);
+                        }else{
+                            $('#divMsg').html(JSON.stringify(resp));
+                        }
+                    });
                 }
-                
-                request.execute(function(resp) {
-                    if(resp.status == "confirmed"){
-                        $('#divMsg').html("<b>Confirmed!</b> (Auto submit 3s)");
-                        window.setTimeout($.functionsApp.submitForm,3000);
-                    }else{
-                        $('#divMsg').html(JSON.stringify(resp));
-                    }
-                });
                 
                 console.log("$.functionsApp.createAppointment finish.");
             } catch (er) {
