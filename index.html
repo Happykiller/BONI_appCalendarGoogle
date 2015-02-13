@@ -15,7 +15,9 @@ and open the template in the editor.
         <script type="text/javascript">
             var input = {
                 "rest" : "http://localhost:8383/Task%20052%20-%20Process%20Tracking/"
-                ,"debug" : true
+                , "clientId" : "yourClientID"
+                , "apiKey" : "yourApiKey"
+                , "debug" : true
             };
 
             var output = {
@@ -24,11 +26,23 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-        <input type="text" id="input_type" value="EXT">
-        <input type="text" id="input_client" value="ORTEC">
+        <div id="input_type">
+            <select>
+                <option selected>EXT</option>
+            </select>
+        </div>
+        <input type="text" id="input_client" value="BETA">
         <input type="text" id="input_cost" value="1.5JH">
-        <input type="text" id="input_where" value="REM">
-        <input type="text" id="input_consultant" value="FRO">
+        <div id="input_where">
+            <select>
+                <option selected>REM</option>
+            </select>
+        </div>
+        <div id="input_consultant">
+            <select>
+                <option selected>FRO</option>
+            </select>
+        </div>
         <input type="text" id="input_cmt" value="Truc">
         <input type="text" id="input_start" value="13-02-15 12:00">
         <input type="text" id="input_end" value="13-02-15 13:00">

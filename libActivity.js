@@ -13,8 +13,8 @@
         _input = input,
         _output = output,
         _debug = input.debug,
-        _clientId = 'xxx',
-        _apiKey = 'xxx',
+        _clientId = input.clientId,
+        _apiKey = input.apiKey,
         _scopes = 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'
     ;
     
@@ -183,16 +183,17 @@
                 });
                 if(_debug){
                     console.log(resource);
-                }else{
-                    request.execute(function(resp) {
-                        if(resp.status == "confirmed"){
-                            $('#divMsg').html("<b>Confirmed!</b> (Auto submit 3s)");
-                            window.setTimeout($.functionsApp.submitForm,3000);
-                        }else{
-                            $('#divMsg').html(JSON.stringify(resp));
-                        }
-                    });
                 }
+                
+                request.execute(function(resp) {
+                    if(resp.status == "confirmed"){
+                        $('#divMsg').html("<b>Confirmed!</b> (Auto submit 3s)");
+                        window.setTimeout($.functionsApp.submitForm,3000);
+                    }else{
+                        $('#divMsg').html(JSON.stringify(resp));
+                    }
+                });
+                
                 console.log("$.functionsApp.createAppointment finish.");
             } catch (er) {
                 console.log(0, "ERROR - $.functionsApp.createAppointment :" + er.message);
