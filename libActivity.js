@@ -83,7 +83,7 @@
         },
         handleAuthResult : function(authResult) {
             try {
-                if (authResult && !authResult.error) {
+                if (authResult.access_token != undefined) {
                     $('#content').html('<div id="divUser"></div><div id="divAction"></div><div id="divMsg"></div>');
                     $.functionsApp.startApp();
                 } else {
