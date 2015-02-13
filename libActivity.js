@@ -143,7 +143,7 @@
                 var input_cmt         = $('#input_cmt').val(); 
                 var input_start       = $('#input_start').val();
                 var input_end         = $('#input_end').val(); 
-                var input_facturable  = $('#input_facturable').val(); 
+                var input_facturable  = $('#input_facturable:checked').val(); 
                 
                 if(_debug){
                     console.log('input_type => '+input_type);
