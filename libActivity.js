@@ -127,14 +127,12 @@
                 console.log("$.functionsApp.getDateGoole finish.");
                 return strDateGoole;
             } catch (er) {
+                return null;
                 console.log(0, "ERROR - $.functionsApp.getDateGoole :" + er.message);
             }
         },
         createAppointment : function(){
             try{
-                $('#divAction').html('');
-                $('#divMsg').html('<b>Waiting...</b>');
-                
                 var input_type        = $('#input_type select').val();
                 var input_client      = $('#input_client').val();
                 var input_cost        = $('#input_cost').val(); 
@@ -158,43 +156,68 @@
                 
                 input_start       = $.functionsApp.getDateGoole(input_start);
                 input_end         = $.functionsApp.getDateGoole(input_end); 
-                var res = input_cmt.substring(0, 5);
                 
-                var strFac = "FREE";
-                if(input_facturable){
-                    strFac = "a0jD";
-                }
+                var gardian = true;
+                var strError = "";
                 
-                var summary = input_type+"-"+input_client+"("+res+")-"+input_cost+"-"+input_where+"-"+strFac+"-"+input_consultant;
+                if(input_type == "null"){gardian = false;strError += "Type is wrong.\n";}
+                if(input_where == "null"){gardian = false;strError += "Where is wrong.\n";}
+                if(input_consultant == "null"){gardian = false;strError += "Consultant is wrong.\n";}
+                if(input_client == ""){gardian = false;strError += "Client is wrong.\n";}
+                if(input_cost == ""){gardian = false;strError += "Periode is wrong.\n";}
+                if(input_start == null){gardian = false;strError += "Start date is wrong.\n";}
+                if(input_end == null){gardian = false;strError += "End date is wrong.\n";}
+                if(input_start == input_end){gardian = false;strError += "Start date and end date are same.\n";}
                 
-                var resource = {
-                    "summary": summary,
-                    "location": input_where,
-                    "start": {
-                      "dateTime": input_start
-                    },
-                    "end": {
-                      "dateTime": input_end
-                    }
-                };
-                var request = gapi.client.calendar.events.insert({
-                    'calendarId': 'bonitasoft.com_r6cu21kekpfg8ucd1ap6fm3h58@group.calendar.google.com',
-                    'resource': resource
-                });
-                
-                if(_debug){
-                    console.log(resource);
-                    $('#divMsg').html("<b>Confirmed! DEBUG</b> (Auto submit 3s)");
-                    window.setTimeout($.functionsApp.submitForm,3000);
+                if(!gardian){
+                    alert('Bad entries, please check them.\n'+strError);
                 }else{
-                    request.execute(function(resp) {
-                        if(resp.status == "confirmed"){
-                            $('#divMsg').html("<b>Confirmed!</b> (Auto submit 3s)");
-                            window.setTimeout($.functionsApp.submitForm,3000);
-                        }else{
-                            $('#divMsg').html(JSON.stringify(resp));
+                    $('#divAction').html('');
+                    $('#divMsg').html('<b>Waiting...</b>');
+                    
+                    var res = input_cmt.substring(0, 5);
+
+                    var strFac = "FREE";
+                    if(input_facturable){
+                        strFac = "a0jD";
+                    }
+
+                    var summary = input_type+"-"+input_client+"("+res+")-"+input_cost+"-"+input_where+"-"+strFac+"-"+input_consultant;
+
+                    var resource = {
+                        "summary": summary,
+                        "location": input_where,
+                        "description": input_cmt,
+                        "start": {
+                          "dateTime": input_start
+                        },
+                        "end": {
+                          "dateTime": input_end
+                        },
+                        "source": {
+                            "url": "https://consultant.cloud.bonitasoft.com/bonita/",
+                            "title": "Clound Consultant Form Activity"
                         }
+                    };
+                    var request = gapi.client.calendar.events.insert({
+                        'calendarId': 'bonitasoft.com_r6cu21kekpfg8ucd1ap6fm3h58@group.calendar.google.com',
+                        'resource': resource
                     });
+
+                    if(_debug){
+                        console.log(resource);
+                        $('#divMsg').html("<b>Confirmed! DEBUG</b> (Auto submit 3s)");
+                        window.setTimeout($.functionsApp.submitForm,3000);
+                    }else{
+                        request.execute(function(resp) {
+                            if(resp.status == "confirmed"){
+                                $('#divMsg').html("<b>Confirmed!</b> (Auto submit 3s)");
+                                window.setTimeout($.functionsApp.submitForm,3000);
+                            }else{
+                                $('#divMsg').html(JSON.stringify(resp));
+                            }
+                        });
+                    }
                 }
                 
                 console.log("$.functionsApp.createAppointment finish.");
