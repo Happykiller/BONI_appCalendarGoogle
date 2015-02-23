@@ -137,7 +137,7 @@
                 var input_client      = $('#input_client').val();
                 var input_cost        = $('#input_cost').val(); 
                 var input_where       = $('#input_where select').val(); 
-                var input_consultant  = $('#input_consultant').val();
+                var input_consultant  = $('#input_consultant').html();
                 var input_cmt         = $('#input_cmt').val(); 
                 var input_start       = $('#input_start').val();
                 var input_end         = $('#input_end').val(); 
@@ -206,6 +206,7 @@
 
                     if(_debug){
                         console.log(resource);
+                        alert(JSON.stringify(resource));
                         $('#divMsg').html("<b>Confirmed! DEBUG</b> (Auto submit 3s)");
                         window.setTimeout($.functionsApp.submitForm,3000);
                     }else{
