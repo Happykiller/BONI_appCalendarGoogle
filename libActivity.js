@@ -137,7 +137,7 @@
                 var input_client      = $('#input_client').val();
                 var input_cost        = $('#input_cost').val(); 
                 var input_where       = $('#input_where select').val(); 
-                var input_consultant  = $('#input_consultant select').val();
+                var input_consultant  = $('#input_consultant').val();
                 var input_cmt         = $('#input_cmt').val(); 
                 var input_start       = $('#input_start').val();
                 var input_end         = $('#input_end').val(); 
